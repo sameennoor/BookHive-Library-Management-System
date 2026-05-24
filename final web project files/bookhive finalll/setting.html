@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings — Library Management</title>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background: url('assets/tag1.jpg') no-repeat center center/cover;
+      font-family: 'Quicksand', sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0,128,128,0.7), rgba(255,165,0,0.6));
+      z-index: 0;
+    }
+
+    .settings-container {
+      position: relative;
+      z-index: 1;
+      background-color: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      padding: 40px 60px;
+      width: 600px;
+      text-align: center;
+      transform: perspective(1000px) rotateY(0deg);
+      transition: transform 0.6s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .settings-container:hover {
+      transform: perspective(1000px) rotateY(5deg);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: teal;
+      margin-bottom: 20px;
+      transition: color 0.3s ease;
+    }
+
+    p {
+      color: #555;
+      font-size: 1rem;
+      margin-bottom: 35px;
+      transition: color 0.3s ease;
+    }
+
+    .setting-option {
+      background: linear-gradient(135deg, #00b3b3, #ffa500);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 10px 0;
+      padding: 14px 20px;
+      width: 100%;
+      transition: all 0.3s ease;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .setting-option:hover {
+      background: linear-gradient(135deg, #008080, #ff8c00);
+      transform: translateY(-5px);
+      box-shadow: 0px 6px 15px rgba(0,0,0,0.3);
+    }
+
+    .footer-text {
+      margin-top: 30px;
+      font-size: 0.9rem;
+      color: #777;
+      transition: color 0.3s ease;
+    }
+
+    .footer-text a {
+      color: teal;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* 🌙 Dark Mode */
+    body.dark-mode {
+      background: #121212;
+      color: #f1f1f1;
+    }
+
+    body.dark-mode::before {
+      background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(40,40,40,0.7));
+    }
+
+    body.dark-mode .settings-container {
+      background-color: #1e1e1e;
+      color: #f1f1f1;
+      box-shadow: 0 10px 25px rgba(255,255,255,0.1);
+    }
+
+    body.dark-mode h1 {
+      color: #ffa500;
+    }
+
+    body.dark-mode p,
+    body.dark-mode .footer-text {
+      color: #ccc;
+    }
+
+    /* Help Modal */
+    .modal-content {
+      border-radius: 15px;
+      background: #ffffff;
+      color: #333;
+    }
+
+    body.dark-mode .modal-content {
+      background: #1e1e1e;
+      color: #f1f1f1;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="settings-container">
+    <h1>⚙️ Settings Panel</h1>
+    <p>Customize your BookHive experience — manage your profile, themes, and more.</p>
+
+    <button class="setting-option" onclick="location.href='profile.html'">👤 Profile Settings</button>
+    <button class="setting-option" onclick="toggleTheme()">🌙 Switch Theme</button>
+     
+    <button class="setting-option" data-bs-toggle="modal" data-bs-target="#helpModal">❓ Help & Guide</button>
+    <button class="setting-option" onclick="location.href='dashboard.html'">🏠 Back to Dashboard</button>
+
+    <p class="footer-text">© 2025 <a href="#">BookHive</a> — Library Management System</p>
+  </div>
+
+  <!-- 🆘 Help Modal -->
+<div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content p-4">
+      <h3 id="helpModalLabel" class="mb-3">💡 Help & Website Guide</h3>
+
+      <p>
+        Welcome to <strong>BookHive Library Management System</strong>! This guide will help you understand the purpose and usage of each section of the website.
+      </p>
+
+      <h4>🏠 Dashboard</h4>
+      <p>The main overview page that displays key statistics — such as total books, issued and returned books, memberships, and visitors — in interactive cards and charts.</p>
+
+      <h4>📚 Books</h4>
+      <p>Here, you can view, add, edit, or delete books in the library. Each record includes the book’s title, author, category, and availability status.</p>
+
+      <h4>👥 Members</h4>
+      <p>This section maintains a record of all library members. You can add new members, update their details, or remove inactive ones.</p>
+
+      <h4>📖 Issued Books</h4>
+      <p>Tracks which books are currently issued, along with member names and return dates. Helps you manage and avoid overdue returns efficiently.</p>
+
+      <h4>⚙️ Settings</h4>
+      <p>Customize your website appearance (light/dark mode), access profile settings, and manage privacy options. You can also navigate to this help page from here.</p>
+
+      <h4>👤 Profile Settings</h4>
+      <p>Update your personal details such as name, email, phone number, and role. All changes are stored for your next session.</p>
+
+      <h4>🌙 Theme Switch</h4>
+      <p>Switch between <strong>Light Mode</strong> and <strong>Dark Mode</strong> using the toggle in the Settings page. Your theme choice is saved automatically and applied across all pages.</p>
+
+       
+      <h4>🚪 Logout</h4>
+      <p>Safely exit your dashboard to protect your data. You can log back in anytime.</p>
+
+      <button class="btn mt-3" data-bs-dismiss="modal" style="background: teal; color: white; border-radius: 10px;">
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Apply saved theme on load
+    document.addEventListener("DOMContentLoaded", () => {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "dark") document.body.classList.add("dark-mode");
+    });
+
+    // Toggle theme
+    function toggleTheme() {
+      document.body.classList.toggle("dark-mode");
+      const theme = document.body.classList.contains("dark-mode") ? "dark" : "light";
+      localStorage.setItem("theme", theme);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Logout — BookHive</title>
+
+    <style>
+        /* GLOBAL THEME VARIABLES */
+        body {
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* Light Mode */
+        body.light {
+            --bg-main: #f4f4f4;
+            --text-color: #222;
+            --card-bg: rgba(255,255,255,0.9);
+            --btn-danger: #ff3939;
+            --btn-cancel: #555;
+        }
+
+        /* Dark Mode */
+        body.dark {
+            --bg-main: #0f0f0f;
+            --text-color: #fff;
+            --card-bg: rgba(30,30,30,0.9);
+            --btn-danger: #ff5a5a;
+            --btn-cancel: #777;
+        }
+
+        /* BACKGROUND */
+        body {
+            background: url('assets/tag1.jpg')
+              no-repeat center/cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(3px);
+        }
+
+        /* CARD */
+        .logout-card {
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            max-width: 400px;
+            background: var(--card-bg);
+            color: var(--text-color);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+            animation: float 5s ease-in-out infinite alternate;
+        }
+
+        /* FLOAT ANIMATION */
+        @keyframes float {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        /* BUTTONS */
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s ease;
+        }
+
+        .btn-logout {
+            background: var(--btn-danger);
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .btn-logout:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255,0,0,0.3);
+        }
+
+        .btn-cancel {
+            background: var(--btn-cancel);
+            color: white;
+        }
+
+        .btn-cancel:hover {
+            opacity: 0.8;
+            transform: translateY(-3px);
+        }
+
+    </style>
+
+    <script>
+        // APPLY SAVED THEME PROPERLY
+        document.addEventListener("DOMContentLoaded", () => {
+            const theme = localStorage.getItem("theme") || "light";
+            document.body.classList.add(theme);
+        });
+
+        // LOGOUT FUNCTION
+        function logoutUser() {
+            localStorage.removeItem("authToken"); // remove login token if you use one
+            localStorage.setItem("isLoggedIn", "false");
+            // Keep theme stored — DO NOT CLEAR ALL STORAGE!
+            
+            // Redirect
+            window.location.href = "login.html";
+        }
+    </script>
+</head>
+
+<body>
+
+    <div class="logout-card">
+        <h2>Confirm Logout</h2>
+        <p>You will be logged out from your BookHive account.</p>
+
+        <button class="btn btn-logout" onclick="logoutUser()">Logout</button>
+        <button class="btn btn-cancel" onclick="history.back()">Cancel</button>
+    </div>
+
+</body>
+</html>

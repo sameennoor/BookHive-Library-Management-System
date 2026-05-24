@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — BookHive Library</title>
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(120deg, #f9f9f9, #eef8f8);
+      margin: 0;
+      display: flex;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      height: 100vh;
+      background: linear-gradient(180deg, #00a497, #ff7a00);
+      color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding: 25px 20px;
+      transition: 0.3s;
+      box-shadow: 5px 0 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .sidebar h3 {
+      text-align: center;
+      font-weight: 800;
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 35px;
+      letter-spacing: 1px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      padding: 12px 15px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      transition: 0.3s;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .sidebar ul li:hover,
+    .sidebar ul li.active {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: 260px;
+      flex: 1;
+      transition: 0.3s;
+      padding: 25px;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      color: #333;
+    }
+
+    .navbar-brand {
+      font-family: 'Playfair Display', serif;
+      font-weight: 800;
+      background: linear-gradient(90deg, #00a497, #ff7a00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .menu-btn {
+      font-size: 1.5rem;
+      color: #00a497;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+    }
+
+    /* Cards */
+    .card {
+      border-radius: 20px;
+      color: #333;
+      font-weight: 600;
+      background: #ffffff;
+      border: none;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .stat-value {
+      font-size: 2.4rem;
+      font-weight: bold;
+      color: #00a497;
+    }
+
+    /* Card Accent Borders */
+    .card-books { border-left: 6px solid #2196f3; }
+    .card-issued { border-left: 6px solid #4caf50; }
+    .card-returned { border-left: 6px solid #ff9800; }
+    .card-members { border-left: 6px solid #f44336; }
+    .card-visitors { border-left: 6px solid #009688; }
+
+    /* Filter */
+    .filter-box {
+      background-color: #ffffff;
+      border: 2px solid #00a497;
+      color: #333;
+      font-weight: 600;
+      border-radius: 10px;
+      padding: 6px 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: 0.3s ease;
+    }
+
+    .filter-box:hover {
+      border-color: #ff7a00;
+      cursor: pointer;
+    }
+
+    /* Chart */
+    #statsChart {
+      max-width: 420px;
+      margin: auto;
+    }
+
+    /* Sidebar collapse */
+    .collapsed .sidebar {
+      left: -260px;
+    }
+
+    .collapsed .main-content {
+      margin-left: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <h3>📚 BookHive</h3>
+    <ul>
+  <li class="active"><i class="bi bi-speedometer2"></i> Dashboard</li>
+  <li id="booksLink"><i class="bi bi-book"></i> Books</li>
+  <li id="membersLink"><i class="bi bi-people"></i> Members</li>
+  <li id="displaysLink"><i class="bi bi-people"></i> Display-Members</li>
+    
+  <!-- ADDED Report Button -->
+  <li id="reportLink"><i class="bi bi-bar-chart"></i> Report</li>
+
+  <li id="settingsLink"><i class="bi bi-gear"></i> Settings</li>
+
+  <!-- Logout -->
+  <li id="logoutLink"><i class="bi bi-box-arrow-right"></i> Logout</li>
+</ul>
+
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content" id="mainContent">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg px-4 mb-4">
+      <button class="menu-btn me-3" id="toggleBtn">☰</button>
+      <a class="navbar-brand" href="#">Dashboard</a>
+    </nav>
+
+    <!-- Filter -->
+    <div class="d-flex justify-content-end align-items-center gap-2 mb-4">
+      <label for="filter" class="fw-bold text-secondary">Filter:</label>
+      <select id="filter" class="form-select w-auto filter-box">
+        <option value="current">Currently</option>
+        <option value="monthly">Monthly</option>
+        <option value="yearly">Yearly</option>
+      </select>
+    </div>
+
+    <!-- Cards -->
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card card-books text-center p-4">
+          <h5>Total Books</h5>
+          <p class="stat-value" id="totalBooks">1200</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-issued text-center p-4">
+          <h5>Issued Books</h5>
+          <p class="stat-value" id="issuedBooks">320</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-returned text-center p-4">
+          <h5>Returned Books</h5>
+          <p class="stat-value" id="returnedBooks">280</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card card-members text-center p-4">
+          <h5>Total Memberships</h5>
+          <p class="stat-value" id="memberships">450</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card card-visitors text-center p-4">
+          <h5>Total Visitors</h5>
+          <p class="stat-value" id="visitors">750</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="text-center mt-5">
+      <h4 class="fw-bold mb-3" style="color:#333;">📊 Statistics Overview</h4>
+      <canvas id="statsChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+  // Sidebar navigation links
+document.getElementById("booksLink").addEventListener("click", function() {
+  window.location.href = "books.html";
+});
+
+document.getElementById("membersLink").addEventListener("click", function() {
+  window.location.href = "new-member.html";
+});
+document.getElementById("displaysLink").addEventListener("click", function() {
+  window.location.href = "display-info.html";
+});
+
+// NEW — Report Page
+document.getElementById("reportLink").addEventListener("click", function() {
+  window.location.href = "Share.html";
+});
+
+// Settings
+document.getElementById("settingsLink").addEventListener("click", function() {
+  window.location.href = "setting.html";
+});
+
+// Logout
+document.getElementById("logoutLink").addEventListener("click", function() {
+  window.location.href = "logout.html";
+});
+
+
+
+  // Drawer toggle functionality
+  const toggleBtn = document.getElementById("toggleBtn");
+  const sidebar = document.getElementById("sidebar");
+  const mainContent = document.getElementById("mainContent");
+
+  toggleBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("collapsed");
+    mainContent.classList.toggle("collapsed");
+  });
+
+  // Stats data
+  const stats = {
+    current: { totalBooks: 1200, issuedBooks: 320, returnedBooks: 280, memberships: 450, visitors: 750 },
+    monthly: { totalBooks: 200, issuedBooks: 90, returnedBooks: 70, memberships: 40, visitors: 150 },
+    yearly: { totalBooks: 1200, issuedBooks: 1100, returnedBooks: 1050, memberships: 500, visitors: 900 }
+  };
+
+  // Chart setup
+  const ctx = document.getElementById('statsChart').getContext('2d');
+  let statsChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ['Total Books', 'Issued', 'Returned', 'Memberships', 'Visitors'],
+      datasets: [{
+        label: 'Statistics',
+        data: [1200, 320, 280, 450, 750],
+        backgroundColor: ['#2196f3', '#4caf50', '#ff9800', '#f44336', '#009688'],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { font: { size: 14 } }
+        }
+      }
+    }
+  });
+
+  // Filter logic
+  document.getElementById("filter").addEventListener("change", function() {
+    const val = this.value;
+    document.getElementById("totalBooks").innerText = stats[val].totalBooks;
+    document.getElementById("issuedBooks").innerText = stats[val].issuedBooks;
+    document.getElementById("returnedBooks").innerText = stats[val].returnedBooks;
+    document.getElementById("memberships").innerText = stats[val].memberships;
+    document.getElementById("visitors").innerText = stats[val].visitors;
+
+    statsChart.data.datasets[0].data = [
+      stats[val].totalBooks,
+      stats[val].issuedBooks,
+      stats[val].returnedBooks,
+      stats[val].memberships,
+      stats[val].visitors
+    ];
+    statsChart.update();
+  });
+</script>
+<script>
+  // Apply saved theme to all pages
+  document.addEventListener("DOMContentLoaded", () => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      document.body.classList.add("dark-mode");
+    }
+  });
+</script>
+
+</body>
+</html>

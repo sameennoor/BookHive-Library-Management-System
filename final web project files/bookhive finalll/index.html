@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome — BookHive Library</title>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url('assets/tag1.jpg') no-repeat center center/cover;
+      font-family: 'Poppins', sans-serif;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Dark overlay for background contrast */
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: 0;
+    }
+
+    /* Floating color glow orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.4;
+      z-index: 0;
+      animation: float 8s ease-in-out infinite alternate;
+    }
+
+    .orb.one { width: 300px; height: 300px; background: #00a497; top: 8%; left: 10%; }
+    .orb.two { width: 400px; height: 400px; background: #ff7a00; bottom: 10%; right: 10%; }
+
+    @keyframes float {
+      from { transform: translateY(0); }
+      to { transform: translateY(-25px); }
+    }
+
+    /* White main card */
+    .welcome-card {
+      position: relative;
+      z-index: 2;
+      background: #ffffff;
+      border-radius: 25px;
+      text-align: center;
+      padding: 70px 60px;
+      max-width: 720px;
+      color: #333;
+      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
+      animation: fadeInScale 1.2s ease forwards;
+    }
+
+    @keyframes fadeInScale {
+      0% { opacity: 0; transform: scale(0.9) translateY(40px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    /* Title */
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.2rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #00a497, #ff7a00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 18px;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #555;
+      margin-bottom: 45px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Buttons */
+    .btn-custom {
+      width: 220px;
+      margin: 10px;
+      padding: 14px;
+      font-weight: 600;
+      border-radius: 12px;
+      border: none;
+      font-size: 1.1rem;
+      transition: 0.3s ease;
+      color: #fff;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    }
+
+    .btn-signin {
+      background: linear-gradient(90deg, #00a497, #00c2b0);
+    }
+
+    .btn-signup {
+      background: linear-gradient(90deg, #ff7a00, #ff9e3c);
+    }
+
+    .btn-custom:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    footer {
+      position: absolute;
+      bottom: 15px;
+      color: rgba(255,255,255,0.8);
+      font-size: 0.9rem;
+      text-align: center;
+      width: 100%;
+      z-index: 1;
+    }
+  </style>
+  
+</head>
+
+<body>
+  <div class="orb one"></div>
+  <div class="orb two"></div>
+
+  <div class="welcome-card">
+    <h1>Welcome to BookHive Library</h1>
+    <h3>Discover, Learn, and Grow — Your Knowledge Hub</h3>
+    <button class="btn btn-custom btn-signin" onclick="location.href='dashboard.html'">Sign In</button>
+    <button class="btn btn-custom btn-signup" onclick="location.href='login.html'">Sign Up</button>
+  </div>
+
+  <footer>© 2025 BookHive Library | Designed with ❤️ for Readers</footer>
+  <script>
+  // Apply saved theme to all pages
+  document.addEventListener("DOMContentLoaded", () => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      document.body.classList.add("dark-mode");
+    }
+  });
+</script>
+
+</body>
+</html>

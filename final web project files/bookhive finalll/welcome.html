@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library Management — Splash Screen</title>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url('assets/tag1.jpg') no-repeat center center/cover;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Gradient overlay for your theme */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(135deg, rgba(0,128,128,0.6), rgba(255,165,0,0.6));
+      z-index: 0;
+    }
+
+    .welcome-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      color: #fff;
+      opacity: 0;
+      animation: fadeZoomIn 2.5s ease forwards;
+    }
+
+    .welcome-content h1 {
+      font-size: 4rem;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes fadeZoomIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 2px 2px 10px #ffb300, 4px 4px 20px #008080;
+      }
+      to {
+        text-shadow: 2px 2px 20px #ffb300, 4px 4px 30px #008080;
+      }
+    }
+
+    /* Fade-out animation before redirect */
+    .fade-out {
+      animation: fadeOut 1.2s forwards ease;
+    }
+
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; transform: scale(1.1); }
+    }
+
+    /* Logo animation */
+    .logo {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 25px;
+      border-radius: 50%;
+      box-shadow: 0 0 20px rgba(255,255,255,0.4);
+      animation: bounce 2s infinite ease-in-out;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="welcome-content">
+    <img src="assets/logo.png" alt="Logo" class="logo">
+    <h1>Welcome to BookHive</h1>
+  </div>
+
+  <script>
+    // Auto redirect after splash animation
+    setTimeout(() => {
+      document.body.classList.add('fade-out');
+      setTimeout(() => {
+        window.location.href = "index.html"; // change this to your next page
+      }, 1200);
+    }, 3000); // stays visible for 3 seconds
+
+    // Allow skip by click or key press
+    document.addEventListener("click", () => window.location.href = "index.html");
+    document.addEventListener("keydown", () => window.location.href = "index.html");
+  </script>
+</body>
+</html>
