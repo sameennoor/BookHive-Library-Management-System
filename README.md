@@ -8,15 +8,15 @@ Book issue and return tracking
 Dashboard with statistics and charts
 Report generation and export
 Responsive user interface
-# Technologies Used
-PHP
-MySQL
-HTML5
-CSS3
-JavaScript
-Bootstrap 5
-Chart.js
-XAMPP
+# 💻 Technologies Used
+- PHP
+- MySQL
+- HTML5
+- CSS3
+- JavaScript
+- Bootstrap 5
+- Chart.js
+- XAMPP
 # Main Modules
 1. ## Authentication Module
 Librarian signup and login
@@ -42,7 +42,7 @@ Maintain transaction history and return conditions
 Generate reports for books, members, and transactions
 Export data in CSV, Excel, and PDF formats
 Display dashboard charts and statistics using Chart.js
-# How to Run the Project
+# ▶️  How to Run the Project
 Start Apache and MySQL in XAMPP
 Import the database into phpMyAdmin
 Place the project folder inside htdocs
