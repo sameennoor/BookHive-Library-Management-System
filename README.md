@@ -19,29 +19,29 @@ BookHive is a web-based Library Management System developed to automate and simp
 - XAMPP
 # Main Modules
 1. ## Authentication Module
-Librarian signup and login
-Secure password hashing using password_hash()
-Session-based authentication
+- Librarian signup and login
+- Secure password hashing using password_hash()
+- Session-based authentication
 
 2. ## Books Management
-Add, update, search, and delete books
-Store title, author, category, and quantity information
-Manage library inventory efficiently
+- Add, update, search, and delete books
+- Store title, author, category, and quantity information
+- Manage library inventory efficiently
 
 3. ## Members Management
-Register and manage library members
-Store academic and personal information
-Update or remove member records
+- Register and manage library members
+- Store academic and personal information
+- Update or remove member records
 
 4. ## Issue & Return System
-Issue books to registered members
-Track issue and return dates
-Maintain transaction history and return conditions
+- Issue books to registered members
+- Track issue and return dates
+- Maintain transaction history and return conditions
 
 5. ## Reports & Analytics
-Generate reports for books, members, and transactions
-Export data in CSV, Excel, and PDF formats
-Display dashboard charts and statistics using Chart.js
+- Generate reports for books, members, and transactions
+- Export data in CSV, Excel, and PDF formats
+- Display dashboard charts and statistics using Chart.js
 # ▶️  How to Run the Project
 - Start Apache and MySQL in XAMPP
 - Import the database into phpMyAdmin
