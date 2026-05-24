@@ -46,5 +46,6 @@ BookHive is a web-based Library Management System developed to automate and simp
 - Start Apache and MySQL in XAMPP
 - Import the database into phpMyAdmin
 - Place the project folder inside htdocs
+-  Open localhost/project-folder-name in browser
 # Conclusion
 BookHive provides a simple, efficient, and scalable solution for managing library activities digitally while improving record management, tracking, and overall library workflow.
